@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/italojs/knn/knn"
+	"github.com/italojs/knn/algorithm"
 	"os"
 	"log"
 	"encoding/csv"
@@ -26,28 +26,8 @@ func readFile(path string)(record [][]string){
 
 func main (){
 	records := readFile("datas/wdbc.csv")
-
 	
-	column := knn.GetCollum(&records,len(records[0])-1)
-	classes := knn.Distinct(&column)
-	var train [][]string
-	var test [][]string
-	p := float32(0.9)
-	for i := range classes{
-		values := knn.GetValuesByClass(&records, classes[i])
-		trainRecords, testRecords := knn.DivideInPercent(&values,p)
-		index := len(trainRecords)
-		for index>0{
-			train = append(train, trainRecords[index-1])
-			index--
-		}
-
-		index = len(testRecords)
-		for index>0{
-			test = append(test, testRecords[index-1])
-			index--
-		}
-	}
+	train, test := knn.PrepareDataset(0.6, records)
 
 	var hits int
 	for i := range test{
