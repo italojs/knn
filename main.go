@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/csv"
-	"fmt"
 	"log"
 	"math"
 	"os"
@@ -46,12 +45,12 @@ func distinct(elements []string) (result []string) {
 	// Return the new slice.
 	return result
 }
-func getCollum(elements [][]string, ColumnIndex int) (column []string) {
+func getCollum(elements [][]string, columnIndex int) (column []string) {
 	//for each []line in dataset
 	//get the the columIndex value
 	//and add into the colum array
 	for i := range elements {
-		column = append(column, (elements)[i][ColumnIndex])
+		column = append(column, (elements)[i][columnIndex])
 	}
 	return
 }
@@ -213,6 +212,7 @@ func main() {
 	records := readFile("data.csv")
 	//Get the classes
 	classes := distinct(getCollum(records, len(records[0])-1))
+
 	var train [][]string
 	var test [][]string
 	//Percent
@@ -246,17 +246,17 @@ func main() {
 		//get the correct class of this line
 		columnIndex := len(test[i]) - 1
 		//print the correct class and the predicted class by algorithm
-		fmt.Println("tumor: ", test[i][columnIndex], " classificado como: ", result)
+		//fmt.Println("tumor: ", test[i][columnIndex], " classificado como: ", result)
 		//if the predicted class is correct, add +1 to hits(count of correct class predicted by algorithm)
 		if result == test[i][columnIndex] {
 			hits++
 		}
 	}
 
-	fmt.Println("Total de dados: ", len(records))
-	fmt.Println("Total de treinamento: ", len(train))
-	fmt.Println("Total de testes: ", len(test))
-	fmt.Println("Total de acertos: ", hits)
-	fmt.Println("Porcentagem de acertos: ", (100 * hits / len(test)), "%")
+	// fmt.Println("Total de dados: ", len(records))
+	// fmt.Println("Total de treinamento: ", len(train))
+	// fmt.Println("Total de testes: ", len(test))
+	// fmt.Println("Total de acertos: ", hits)
+	// fmt.Println("Porcentagem de acertos: ", (100 * hits / len(test)), "%")
 
 }
